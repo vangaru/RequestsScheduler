@@ -1,0 +1,122 @@
+﻿[
+  {
+    "Hour": 0,
+    "MinSeatApplicationsCount": 6,
+    "MaxSeatApplicationsSeatsCount": 20
+  },
+  {
+    "Hour": 1,
+    "MinSeatApplicationsCount": 2,
+    "MaxSeatApplicationsSeatsCount": 10
+  },
+  {
+    "Hour": 2,
+    "MinSeatApplicationsCount": 2,
+    "MaxSeatApplicationsSeatsCount": 10
+  },
+  {
+    "Hour": 3,
+    "MinSeatApplicationsCount": 2,
+    "MaxSeatApplicationsSeatsCount": 10
+  },
+  {
+    "Hour": 4,
+    "MinSeatApplicationsCount": 2,
+    "MaxSeatApplicationsSeatsCount": 10
+  },
+  {
+    "Hour": 5,
+    "MinSeatApplicationsCount": 3,
+    "MaxSeatApplicationsSeatsCount": 12
+  },
+  {
+    "Hour": 6,
+    "MinSeatApplicationsCount": 8,
+    "MaxSeatApplicationsSeatsCount": 30
+  },
+  {
+    "Hour": 7,
+    "MinSeatApplicationsCount": 24,
+    "MaxSeatApplicationsSeatsCount": 90
+  },
+  {
+    "Hour": 8,
+    "MinSeatApplicationsCount": 30,
+    "MaxSeatApplicationsSeatsCount": 112
+  },
+  {
+    "Hour": 9,
+    "MinSeatApplicationsCount": 24,
+    "MaxSeatApplicationsSeatsCount": 90
+  },
+  {
+    "Hour": 10,
+    "MinSeatApplicationsCount": 20,
+    "MaxSeatApplicationsSeatsCount": 75
+  },
+  {
+    "Hour": 11,
+    "MinSeatApplicationsCount": 20,
+    "MaxSeatApplicationsSeatsCount": 75
+  },
+  {
+    "Hour": 12,
+    "MinSeatApplicationsCount": 22,
+    "MaxSeatApplicationsSeatsCount": 80
+  },
+  {
+    "Hour": 13,
+    "MinSeatApplicationsCount": 24,
+    "MaxSeatApplicationsSeatsCount": 90
+  },
+  {
+    "Hour": 14,
+    "MinSeatApplicationsCount": 24,
+    "MaxSeatApplicationsSeatsCount": 90
+  },
+  {
+    "Hour": 15,
+    "MinSeatApplicationsCount": 24,
+    "MaxSeatApplicationsSeatsCount": 90
+  },
+  {
+    "Hour": 16,
+    "MinSeatApplicationsCount": 24,
+    "MaxSeatApplicationsSeatsCount": 90
+  },
+  {
+    "Hour": 17,
+    "MinSeatApplicationsCount": 30,
+    "MaxSeatApplicationsSeatsCount": 112
+  },
+  {
+    "Hour": 18,
+    "MinSeatApplicationsCount": 30,
+    "MaxSeatApplicationsSeatsCount": 112
+  },
+  {
+    "Hour": 19,
+    "MinSeatApplicationsCount": 24,
+    "MaxSeatApplicationsSeatsCount": 90
+  },
+  {
+    "Hour": 20,
+    "MinSeatApplicationsCount": 22,
+    "MaxSeatApplicationsSeatsCount": 80
+  },
+  {
+    "Hour": 21,
+    "MinSeatApplicationsCount": 22,
+    "MaxSeatApplicationsSeatsCount": 80
+  },
+  {
+    "Hour": 22,
+    "MinSeatApplicationsCount": 15,
+    "MaxSeatApplicationsSeatsCount": 60
+  },
+  {
+    "Hour": 23,
+    "MinSeatApplicationsCount": 12,
+    "MaxSeatApplicationsSeatsCount": 40
+  }
+]
