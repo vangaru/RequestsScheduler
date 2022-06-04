@@ -40,7 +40,7 @@ public class IntervalsProvider : IIntervalsProvider
         return intervals;
     }
 
-    public Interval? CurrentInterval
+    public Interval CurrentInterval
     {
         get
         {
@@ -49,9 +49,9 @@ public class IntervalsProvider : IIntervalsProvider
                 throw new ApplicationException("Cannot get current interval. Intervals are null.");
             }
 
-            return Intervals.FirstOrDefault(interval => interval.Hour == DateTime.Now.Hour);
+            return Intervals.First(interval => interval.Hour == DateTime.Now.Hour);
         }
     }
 
-    public IEnumerable<Interval>? Intervals { get; }
+    public IEnumerable<Interval> Intervals { get; }
 }

@@ -1,12 +1,16 @@
+using RequestsScheduler.Scheduler.Services;
+
 namespace RequestsScheduler.Scheduler;
 
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
+    private readonly INextSeatApplicationDelayProvider _nextSeatApplicationDelayProvider;
 
-    public Worker(ILogger<Worker> logger)
+    public Worker(ILogger<Worker> logger, INextSeatApplicationDelayProvider nextSeatApplicationDelayProvider)
     {
         _logger = logger;
+        _nextSeatApplicationDelayProvider = nextSeatApplicationDelayProvider;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -14,7 +18,7 @@ public class Worker : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            await Task.Delay(1000, stoppingToken);
+            await Task.Delay(_nextSeatApplicationDelayProvider.DelayInMillis, stoppingToken);
         }
     }
 }
