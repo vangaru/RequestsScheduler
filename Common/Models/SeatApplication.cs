@@ -1,4 +1,6 @@
-﻿namespace RequestsScheduler.Common.Models;
+﻿using System.Text.Json;
+
+namespace RequestsScheduler.Common.Models;
 
 public class SeatApplication
 {
@@ -8,4 +10,9 @@ public class SeatApplication
     public int Destination { get; set; }
     public DateTime DateTime { get; set; }
     public string? Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonSerializer.Serialize(this);
+    }
 }

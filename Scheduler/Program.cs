@@ -5,6 +5,7 @@ using RequestsScheduler.Scheduler;
 using RequestsScheduler.Scheduler.Services;
 
 const string intervalsConfigurationSection = "IntervalsConfiguration";
+const string routesConfigurationSection= "RoutesConfiguration";
 const string rabbitMQConfigurationSection = "RabbitMQConfiguration";
 
 IHost host = Host.CreateDefaultBuilder(args)
@@ -12,20 +13,28 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         IConfiguration configuration = hostContext.Configuration;
         
-        IntervalsConfiguration intervalsConfiguration = configuration
+        var intervalsConfiguration = configuration
             .GetSection(intervalsConfigurationSection)
             .Get<IntervalsConfiguration>();
 
-        RabbitMQConfiguration rabbitMqConfiguration = configuration
+        var routesConfiguration = configuration
+            .GetSection(routesConfigurationSection)
+            .Get<RoutesConfiguration>();
+
+        var rabbitMqConfiguration = configuration
             .GetSection(rabbitMQConfigurationSection)
             .Get<RabbitMQConfiguration>();
 
         services.AddSingleton(intervalsConfiguration);
+        services.AddSingleton(routesConfiguration);
         services.AddSingleton(rabbitMqConfiguration);
         services.AddSingleton<IIntervalsProvider, IntervalsProvider>();
         services.AddSingleton<INextSeatApplicationDelayProvider, NextSeatApplicationDelayProvider>();
         services.AddSingleton<IRabbitMQRepository, RabbitMQRepository>();
-        
+        services.AddSingleton<IRouteGenerator, RouteGenerator>();
+        services.AddSingleton<ISeatApplicationGenerator, SeatApplicationGenerator>();
+        services.AddSingleton<ISchedulerService, SchedulerService>();
+
         services.AddHostedService<Worker>();
     })
     .Build();
