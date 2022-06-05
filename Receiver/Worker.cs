@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using RabbitMQ.Client;
@@ -13,7 +14,7 @@ namespace RequestsScheduler.Receiver;
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
-    private readonly RabbitMQConfiguration _configuration;
+    private readonly RabbitMQReceiverConfiguration _configuration;
     private readonly ISeatApplicationsDbRepository _seatApplicationsDbRepository;
     private readonly IRabbitMQRepository _rabbitMqRepository;
     private ConnectionFactory? _connectionFactory;
@@ -22,7 +23,7 @@ public class Worker : BackgroundService
 
     public Worker(
         ILogger<Worker> logger, 
-        RabbitMQConfiguration configuration, 
+        RabbitMQReceiverConfiguration configuration, 
         ISeatApplicationsDbRepository seatApplicationsDbRepository, 
         IRabbitMQRepository rabbitMqRepository)
     {
@@ -36,15 +37,15 @@ public class Worker : BackgroundService
     {
         _connectionFactory = new ConnectionFactory
         {
-            UserName = _configuration.UserName,
-            Password = _configuration.Password,
-            VirtualHost = _configuration.VirtualHost,
-            HostName = _configuration.HostName,
+            UserName = _configuration.SourceQueueConfiguration?.UserName,
+            Password = _configuration.SourceQueueConfiguration?.Password,
+            VirtualHost = _configuration.SourceQueueConfiguration?.VirtualHost,
+            HostName = _configuration.SourceQueueConfiguration?.HostName,
             DispatchConsumersAsync = true
         };
         _connection = _connectionFactory.CreateConnection();
         _channel = _connection.CreateModel();
-        _channel.QueueDeclare(_configuration.QueueName, durable: true, exclusive: false, autoDelete: false,
+        _channel.QueueDeclare(_configuration.SourceQueueConfiguration?.QueueName, durable: true, exclusive: false, autoDelete: false,
             arguments: null);
         _channel.BasicQos(0, 1, false);
         return base.StartAsync(cancellationToken);
@@ -68,7 +69,15 @@ public class Worker : BackgroundService
                 }
 
                 seatApplication.Status = SeatApplicationStatus.Received.ToString();
+                seatApplication.DateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
                 await _seatApplicationsDbRepository.AddAsync(seatApplication);
+
+                string seatApplicationJson = JsonSerializer.Serialize(seatApplication);
+                if (_configuration.DestinationQueueConfiguration == null)
+                {
+                    throw new ApplicationException("RabbitMQ configuration section is incorrectly configured.");
+                }
+                _rabbitMqRepository.Send(seatApplicationJson, _configuration.DestinationQueueConfiguration);
             }
             catch (JsonException)
             {
@@ -87,7 +96,7 @@ public class Worker : BackgroundService
             _channel?.BasicAck(ea.DeliveryTag, false);
         };
 
-        _channel.BasicConsume(queue: _configuration.QueueName, autoAck: false, consumer: consumer);
+        _channel.BasicConsume(queue: _configuration.SourceQueueConfiguration?.QueueName, autoAck: false, consumer: consumer);
         await Task.CompletedTask;
     }
 

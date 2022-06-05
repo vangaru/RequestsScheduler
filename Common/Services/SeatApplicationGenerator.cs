@@ -1,4 +1,5 @@
-﻿using RequestsScheduler.Common.Models;
+﻿using System.Globalization;
+using RequestsScheduler.Common.Models;
 
 namespace RequestsScheduler.Common.Services;
 
@@ -20,7 +21,7 @@ public class SeatApplicationGenerator : ISeatApplicationGenerator
         return new SeatApplication
         {
             Id = Guid.NewGuid().ToString(),
-            DateTime = DateTime.Now,
+            DateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture),
             Origin = origin,
             Destination = destination,
             SeatsCount = GenerateSeatsCount(),

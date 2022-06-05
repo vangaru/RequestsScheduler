@@ -8,7 +8,7 @@ public class SeatApplication
     public int SeatsCount { get; set; }
     public int Origin { get; set; }
     public int Destination { get; set; }
-    public DateTime DateTime { get; set; }
+    public string? DateTime { get; set; }
     public string? Status { get; set; }
 
     public override string ToString()
